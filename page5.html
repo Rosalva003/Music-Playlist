@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share your Soundtrack Of Life</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease-in-out infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(3px 3px at 20px 30px, #ff69b4, transparent),
+                radial-gradient(3px 3px at 40px 70px, #ff1493, transparent),
+                radial-gradient(2px 2px at 90px 40px, #ffc0cb, transparent),
+                radial-gradient(2px 2px at 130px 80px, #ffb6c1, transparent),
+                radial-gradient(3px 3px at 160px 30px, #ff69b4, transparent),
+                radial-gradient(2px 2px at 200px 50px, #ff1493, transparent),
+                radial-gradient(3px 3px at 250px 20px, #ffc0cb, transparent);
+            background-repeat: repeat;
+            background-size: 300px 150px;
+            animation: starTwinkle 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            color: #ff1493;
+            text-shadow: 
+                0 0 20px rgba(255, 20, 147, 1),
+                0 0 40px rgba(255, 20, 147, 0.8),
+                0 0 60px rgba(255, 20, 147, 0.6),
+                0 0 80px rgba(255, 20, 147, 0.4);
+            animation: neonGlow 2s ease-in-out infinite;
+            margin-bottom: 20px;
+            position: relative;
+            font-weight: 900;
+        }
+
+        @keyframes neonGlow {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 20px rgba(255, 20, 147, 1),
+                    0 0 40px rgba(255, 20, 147, 0.8),
+                    0 0 60px rgba(255, 20, 147, 0.6),
+                    0 0 80px rgba(255, 20, 147, 0.4);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 30px rgba(255, 20, 147, 1),
+                    0 0 60px rgba(255, 20, 147, 0.9),
+                    0 0 90px rgba(255, 20, 147, 0.7),
+                    0 0 120px rgba(255, 20, 147, 0.5);
+            }
+        }
+
+        .header h1::before {
+            content: '📝';
+            position: absolute;
+            left: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            animation: bookBounce 2s ease-in-out infinite;
+        }
+
+        .header h1::after {
+            content: '🎵';
+            position: absolute;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            animation: musicNoteFloat 3s ease-in-out infinite;
+        }
+
+
+        @keyframes bookBounce {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.1); }
+        }
+
+        @keyframes musicNoteFloat {
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            50% { transform: translateY(-50%) rotate(10deg); }
+        }
+
+        .header p {
+            color: #ffb6c1;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(255, 182, 193, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #ffc0cb;
+            font-size: 1rem;
+            font-style: italic;
+            text-shadow: 0 0 8px rgba(255, 192, 203, 0.6);
+        }
+
+        /* Y2K Soundtrack Form */
+        .guest-book-form {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.9), rgba(255, 105, 180, 0.8), rgba(255, 192, 203, 0.7));
+            border-radius: 15px;
+            padding: 15px;
+            margin: 0 auto 30px auto;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 
+                0 0 20px rgba(255, 20, 147, 0.6),
+                0 0 40px rgba(255, 105, 180, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.2),
+                inset 0 0 20px rgba(255, 192, 203, 0.1);
+            border: 3px solid rgba(255, 105, 180, 0.6);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            animation: formGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes formGlow {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 20px rgba(255, 20, 147, 0.6),
+                    0 0 40px rgba(255, 105, 180, 0.4),
+                    inset 0 0 10px rgba(255, 255, 255, 0.2),
+                    inset 0 0 20px rgba(255, 192, 203, 0.1);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 30px rgba(255, 20, 147, 0.8),
+                    0 0 60px rgba(255, 105, 180, 0.6),
+                    inset 0 0 15px rgba(255, 255, 255, 0.3),
+                    inset 0 0 30px rgba(255, 192, 203, 0.2);
+            }
+        }
+
+        .guest-book-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: formShine 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes formShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .form-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.8),
+                0 0 20px rgba(255, 105, 180, 0.6),
+                2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-shadow: 0 0 8px rgba(255, 20, 147, 0.8);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(255, 192, 203, 0.5);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff1493;
+            box-shadow: 
+                0 0 15px rgba(255, 20, 147, 0.6),
+                inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            transform: scale(1.02);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 8px 25px rgba(255, 20, 147, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 12px 35px rgba(255, 20, 147, 0.6),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.95);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Saved Soundtracks Display */
+        .saved-soundtracks {
+            margin: 30px 0;
+            padding: 20px;
+        }
+
+        .saved-entry {
+            background: linear-gradient(135deg, rgba(255, 192, 203, 0.9), rgba(255, 182, 193, 0.8));
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 
+                0 5px 15px rgba(255, 20, 147, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 105, 180, 0.4);
+            position: relative;
+            animation: entrySlideIn 0.5s ease-out;
+        }
+
+        @keyframes entrySlideIn {
+            0% { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.9); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .saved-entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed rgba(255, 105, 180, 0.5);
+        }
+
+        .saved-entry-name {
+            font-weight: bold;
+            color: #ff1493;
+            font-size: 1rem;
+            text-shadow: 0 0 6px rgba(255, 20, 147, 0.6);
+        }
+
+        .saved-entry-date {
+            color: #ff69b4;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        .saved-entry-song {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .saved-entry-artist {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .saved-entry-message {
+            color: #555;
+            line-height: 1.4;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .saved-entry-emoji {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            color: #ff1493;
+            text-shadow: 0 0 8px rgba(255, 20, 147, 0.6);
+            animation: starTwinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { 
+                transform: rotate(0deg) scale(1); 
+                opacity: 0.8;
+            }
+            50% { 
+                transform: rotate(10deg) scale(1.2); 
+                opacity: 1;
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 0 10px;
+            background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ffb6c1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.3);
+            box-shadow: 
+                0 6px 20px rgba(255, 182, 193, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(255, 182, 193, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 10px 30px rgba(255, 182, 193, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                inset 0 -1px 0 rgba(255, 182, 193, 0.3);
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1, #ffc0cb);
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn::after {
+            content: '✨';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .nav-btn:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            animation: sparkle 0.6s ease-in-out;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Y2K Floating Elements */
+        .floating-element {
+            position: fixed;
+            font-size: 2rem;
+            color: #ff1493;
+            animation: elementFloat 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+            text-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.8),
+                0 0 20px rgba(255, 105, 180, 0.6),
+                0 0 30px rgba(255, 192, 203, 0.4);
+            filter: saturate(1.5) brightness(1.2);
+        }
+
+        .floating-element:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 20%; right: 15%; animation-delay: -1.5s; }
+        .floating-element:nth-child(3) { top: 60%; left: 5%; animation-delay: -3s; }
+        .floating-element:nth-child(4) { top: 80%; right: 10%; animation-delay: -4.5s; }
+        .floating-element:nth-child(5) { top: 40%; left: 50%; animation-delay: -2s; }
+        .floating-element:nth-child(6) { top: 30%; left: 80%; animation-delay: -1s; }
+        .floating-element:nth-child(7) { top: 70%; right: 30%; animation-delay: -3.5s; }
+
+        @keyframes elementFloat {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+                filter: saturate(1.5) brightness(1.2) hue-rotate(0deg);
+            }
+            25% { 
+                transform: translateY(-15px) translateX(8px) rotate(90deg) scale(1.1);
+                filter: saturate(1.8) brightness(1.4) hue-rotate(90deg);
+            }
+            50% { 
+                transform: translateY(-25px) translateX(-5px) rotate(180deg) scale(1.2);
+                filter: saturate(2) brightness(1.6) hue-rotate(180deg);
+            }
+            75% { 
+                transform: translateY(-10px) translateX(-12px) rotate(270deg) scale(1.1);
+                filter: saturate(1.8) brightness(1.4) hue-rotate(270deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header h1::before,
+            .header h1::after {
+                display: none;
+            }
+            
+            
+            .guest-book-form {
+                padding: 20px;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+            
+            .floating-element {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Y2K Floating Elements -->
+    <div class="floating-element">🎵</div>
+    <div class="floating-element">📝</div>
+    <div class="floating-element">✨</div>
+    <div class="floating-element">💖</div>
+    <div class="floating-element">🌟</div>
+    <div class="floating-element">🎶</div>
+    <div class="floating-element">🎤</div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>SHARE YOUR SOUNDTRACK OF LIFE</h1>
+            <p>Share Your Musical Journey</p>
+            <p class="subtitle">Tell us about the songs that define your life!</p>
+        </div>
+
+        <!-- Soundtrack Form -->
+        <div class="guest-book-form">
+            <h2 class="form-title">Share Your Song 🎶</h2>
+            <form id="guestForm">
+                <div class="form-group">
+                    <label for="name">Your Name (Optional):</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="song">Song Title:</label>
+                    <input type="text" id="song" name="song" required placeholder="What's your favorite song?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="artist">Artist:</label>
+                    <input type="text" id="artist" name="artist" required placeholder="Who sings it?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Why is this your soundtrack?:</label>
+                    <textarea id="message" name="message" placeholder="Tell us why this song means so much to you..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">SHARE YOUR SOUNDTRACK ✨</button>
+            </form>
+        </div>
+
+        <!-- Display Saved Soundtracks -->
+        <div class="saved-soundtracks" id="savedSoundtracks">
+            <!-- Saved entries will be displayed here -->
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav">
+            <a href="page4.html" class="nav-btn">SONG GALAXY 🌌</a>
+            <a href="page3.html" class="nav-btn">JOURNAL 📖</a>
+            <a href="index.html" class="nav-btn">HOME ✨</a>
+        </div>
+    </div>
+
+    <script>
+        // Load saved soundtracks on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedSoundtracks();
+        });
+
+        function loadSavedSoundtracks() {
+            const savedSoundtracks = JSON.parse(localStorage.getItem('savedSoundtracks')) || [];
+            const container = document.getElementById('savedSoundtracks');
+            
+            container.innerHTML = '';
+            
+            if (savedSoundtracks.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #ffb6c1; font-style: italic;">No soundtracks shared yet. Be the first! 🎵</p>';
+                return;
+            }
+            
+            savedSoundtracks.forEach(entry => {
+                const entryElement = createSavedEntryElement(entry);
+                container.appendChild(entryElement);
+            });
+        }
+
+        function createSavedEntryElement(entry) {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'saved-entry';
+            
+            const stars = ['★', '☆', '✦', '✧', '✩', '✪', '✫', '✬', '✭', '✮'];
+            const randomStar = stars[Math.floor(Math.random() * stars.length)];
+            
+            const displayName = entry.name || 'Anonymous';
+            const displayMessage = entry.message || 'No message provided.';
+            
+            entryDiv.innerHTML = `
+                <div class="saved-entry-emoji">${randomStar}</div>
+                <div class="saved-entry-header">
+                    <div class="saved-entry-name">${displayName}</div>
+                    <div class="saved-entry-date">${formatDate(entry.date)}</div>
+                </div>
+                <div class="saved-entry-song">"${entry.song}"</div>
+                <div class="saved-entry-artist">by ${entry.artist}</div>
+                <div class="saved-entry-message">${displayMessage}</div>
+            `;
+            
+            return entryDiv;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        // Handle form submission
+        document.getElementById('guestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const newEntry = {
+                name: formData.get('name'),
+                song: formData.get('song'),
+                artist: formData.get('artist'),
+                message: formData.get('message'),
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            // Get existing saved soundtracks
+            const savedSoundtracks = JSON.parse(localStorage.getItem('savedSoundtracks')) || [];
+            
+            // Add new entry to the beginning
+            savedSoundtracks.unshift(newEntry);
+            
+            // Save to localStorage
+            localStorage.setItem('savedSoundtracks', JSON.stringify(savedSoundtracks));
+            
+            // Reload display
+            loadSavedSoundtracks();
+            
+            // Reset form
+            this.reset();
+            
+            // Show success message
+            showSuccessMessage();
+        });
+
+        function showSuccessMessage() {
+            // Create success message
+            const successDiv = document.createElement('div');
+            successDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb);
+                color: white;
+                padding: 20px 40px;
+                border-radius: 20px;
+                font-size: 1.2rem;
+                font-weight: bold;
+                text-align: center;
+                box-shadow: 0 0 30px rgba(255, 20, 147, 0.6);
+                z-index: 1000;
+                animation: successPop 2s ease-out forwards;
+            `;
+            
+            successDiv.innerHTML = '🎉 Your soundtrack has been shared! 🎵';
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes successPop {
+                    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+                    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+                    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(successDiv);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (successDiv.parentNode) {
+                    successDiv.parentNode.removeChild(successDiv);
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

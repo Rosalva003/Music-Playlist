@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Galaxy - Cosmic Music Universe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: 
+                radial-gradient(ellipse at center, rgba(255, 20, 147, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 80%, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 192, 203, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 25%, #2a0a2a 50%, #1a0a1a 75%, #0a0a0a 100%);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+            animation: galaxyShift 15s ease-in-out infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #ff69b4, transparent),
+                radial-gradient(2px 2px at 40px 70px, #ff1493, transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffc0cb, transparent),
+                radial-gradient(1px 1px at 130px 80px, #ffb6c1, transparent),
+                radial-gradient(2px 2px at 160px 30px, #ff69b4, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: starTwinkle 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes galaxyShift {
+            0%, 100% { 
+                background-position: 0% 50%, 0% 50%, 0% 50%, 0% 50%;
+                filter: hue-rotate(0deg);
+            }
+            25% { 
+                background-position: 25% 25%, 75% 75%, 25% 75%, 75% 25%;
+                filter: hue-rotate(90deg);
+            }
+            50% { 
+                background-position: 50% 0%, 50% 100%, 0% 50%, 100% 50%;
+                filter: hue-rotate(180deg);
+            }
+            75% { 
+                background-position: 75% 75%, 25% 25%, 75% 25%, 25% 75%;
+                filter: hue-rotate(270deg);
+            }
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+            animation: cursorPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes cursorPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 3;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1, #ff69b4);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 
+                0 0 20px rgba(255, 20, 147, 0.8),
+                0 0 40px rgba(255, 105, 180, 0.6),
+                0 0 60px rgba(255, 192, 203, 0.4);
+            animation: cosmicShine 4s ease-in-out infinite;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .header h1::before {
+            content: '🌌';
+            position: absolute;
+            left: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            animation: galaxySpin 6s linear infinite;
+        }
+
+        .header h1::after {
+            content: '🌌';
+            position: absolute;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            animation: galaxySpin 6s linear infinite reverse;
+        }
+
+        @keyframes cosmicShine {
+            0%, 100% { 
+                background-position: 0% 50%;
+                filter: hue-rotate(0deg);
+            }
+            25% { 
+                background-position: 25% 25%;
+                filter: hue-rotate(90deg);
+            }
+            50% { 
+                background-position: 100% 50%;
+                filter: hue-rotate(180deg);
+            }
+            75% { 
+                background-position: 75% 75%;
+                filter: hue-rotate(270deg);
+            }
+        }
+
+        @keyframes galaxySpin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* Song Stars Galaxy */
+        .song-stars-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 80px;
+            min-height: 70vh;
+            padding: 60px;
+            position: relative;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .song-star:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .song-star:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .song-star:nth-child(3) {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        .song-star:nth-child(4) {
+            grid-column: 1;
+            grid-row: 2;
+            justify-self: center;
+        }
+
+        .song-star:nth-child(5) {
+            grid-column: 3;
+            grid-row: 2;
+            justify-self: center;
+        }
+
+        .song-star {
+            position: relative;
+            animation: starFloat 6s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .song-star:hover {
+            transform: scale(1.2) rotate(10deg);
+            filter: brightness(1.3) saturate(1.5);
+        }
+
+        .song-star::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            right: -30px;
+            bottom: -30px;
+            background: radial-gradient(circle, rgba(255, 20, 147, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: starGlow 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .star-core {
+            font-size: 4rem;
+            animation: starTwinkle 3s ease-in-out infinite;
+            margin-bottom: 15px;
+            text-shadow: 
+                0 0 20px rgba(255, 20, 147, 0.8),
+                0 0 40px rgba(255, 105, 180, 0.6),
+                0 0 60px rgba(255, 192, 203, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .song-star:hover .star-core {
+            font-size: 5rem;
+            text-shadow: 
+                0 0 30px rgba(255, 20, 147, 1),
+                0 0 60px rgba(255, 105, 180, 0.8),
+                0 0 90px rgba(255, 192, 203, 0.6);
+        }
+
+        .star-info {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.9), rgba(255, 105, 180, 0.8));
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 20px rgba(255, 20, 147, 0.6),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 192, 203, 0.5);
+            backdrop-filter: blur(10px);
+            min-width: 150px;
+        }
+
+        .star-title {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+            text-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.8),
+                2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .star-artist {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1rem;
+            color: #ffc0cb;
+            text-shadow: 
+                0 0 8px rgba(255, 192, 203, 0.8),
+                1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .star-rank {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #333;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 
+                0 0 15px rgba(255, 215, 0, 0.6),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            border: 2px solid #ffb347;
+            z-index: 15;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .song-star.ranked .star-rank {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .song-star.ranked {
+            animation: rankedGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes rankedGlow {
+            0%, 100% { 
+                filter: brightness(1) saturate(1);
+            }
+            50% { 
+                filter: brightness(1.2) saturate(1.3);
+            }
+        }
+
+        @keyframes starFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1);
+                filter: hue-rotate(0deg);
+            }
+            25% { 
+                transform: translateY(-20px) rotate(5deg) scale(1.05);
+                filter: hue-rotate(90deg);
+            }
+            50% { 
+                transform: translateY(-30px) rotate(0deg) scale(1.1);
+                filter: hue-rotate(180deg);
+            }
+            75% { 
+                transform: translateY(-15px) rotate(-5deg) scale(1.05);
+                filter: hue-rotate(270deg);
+            }
+        }
+
+        @keyframes starGlow {
+            0%, 100% { 
+                opacity: 0.4;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.3);
+            }
+        }
+
+
+
+
+
+
+
+
+        /* Doodles */
+        .doodle {
+            background: #fffacd;
+            border: 3px dashed #ff69b4;
+            padding: 20px;
+            transform: rotate(3deg);
+            animation: doodleFloat 7s ease-in-out infinite;
+        }
+
+        .doodle-content {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .doodle-scribbles {
+            width: 100%;
+            height: 20px;
+            background: repeating-linear-gradient(
+                45deg,
+                #ff69b4,
+                #ff69b4 5px,
+                transparent 5px,
+                transparent 10px
+            );
+            margin: 10px 0;
+        }
+
+        .doodle-hearts {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            animation: heartBeat 2s ease-in-out infinite;
+        }
+
+        @keyframes doodleFloat {
+            0%, 100% { transform: rotate(3deg) translateY(0px); }
+            50% { transform: rotate(-1deg) translateY(-8px); }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+
+
+
+        .ticket-details {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+
+
+
+        .ticket-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .ticket-perforation {
+            position: absolute;
+            right: -2px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 80%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 8px,
+                #333 8px,
+                #333 12px
+            );
+        }
+
+
+        /* Screenshots */
+        .screenshot {
+            transform: rotate(1deg);
+            animation: screenshotFloat 5s ease-in-out infinite;
+        }
+
+        .screenshot-frame {
+            background: #000;
+            border: 3px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .screenshot-content {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .screenshot-title {
+            color: #fff;
+            font-size: 1rem;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        @keyframes screenshotFloat {
+            0%, 100% { transform: rotate(1deg) translateY(0px); }
+            50% { transform: rotate(-2deg) translateY(-7px); }
+        }
+
+        /* Memory Notes */
+        .memory-note {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #333;
+            font-family: 'Comic Sans MS', cursive;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        /* Concert Image Modal */
+        .concert-image-modal {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            height: 400px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            transition: bottom 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+            border: 3px solid #ff1493;
+        }
+
+        .concert-image-modal.show {
+            bottom: 20px;
+        }
+
+        .concert-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 17px;
+        }
+
+        .concert-image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .concert-image-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .concert-image-date {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .close-concert-image {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 20, 147, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .close-concert-image:hover {
+            background: rgba(255, 20, 147, 1);
+            transform: scale(1.1);
+        }
+
+        /* Placeholder Concert Image */
+        .placeholder-concert-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff1493, #ff69b4, #ffc0cb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 17px;
+        }
+
+        .placeholder-content {
+            text-align: center;
+            color: white;
+        }
+
+
+        .placeholder-subtext {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes micBounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Glitter Pen Underline */
+        .glitter-underline {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .glitter-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #ff1493, #ff69b4, #ffc0cb, #ff1493, 
+                #ff69b4, #ffc0cb, #ff1493);
+            background-size: 200% 100%;
+            border-radius: 2px;
+            transition: width 1.5s ease-in-out;
+            box-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.6),
+                0 0 20px rgba(255, 105, 180, 0.4);
+            animation: glitterShine 2s ease-in-out infinite;
+        }
+
+        .glitter-underline.show::after {
+            width: 100%;
+        }
+
+        @keyframes glitterShine {
+            0%, 100% { 
+                background-position: 0% 50%;
+                box-shadow: 
+                    0 0 10px rgba(255, 20, 147, 0.6),
+                    0 0 20px rgba(255, 105, 180, 0.4);
+            }
+            50% { 
+                background-position: 100% 50%;
+                box-shadow: 
+                    0 0 15px rgba(255, 20, 147, 0.8),
+                    0 0 25px rgba(255, 105, 180, 0.6),
+                    0 0 35px rgba(255, 192, 203, 0.4);
+            }
+        }
+
+        /* Concert Memory Text */
+        .concert-memory {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 
+                0 8px 25px rgba(255, 20, 147, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            max-width: 250px;
+            text-align: center;
+        }
+
+        .concert-memory.show {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1.02);
+        }
+
+        .concert-memory-text {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 0.9rem;
+            color: #333;
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        /* Floating Music Constellations */
+        .floating-star {
+            position: fixed;
+            font-size: 1.5rem;
+            color: #ff1493;
+            animation: starFloat 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-star::before {
+            content: '🎵';
+            animation: musicNoteFloat 3s ease-in-out infinite;
+        }
+
+        .floating-star:nth-child(2n)::before {
+            content: '⭐';
+            animation: starTwinkle 2s ease-in-out infinite;
+        }
+
+        .floating-star:nth-child(3n)::before {
+            content: '🌟';
+            animation: starGlow 4s ease-in-out infinite;
+        }
+
+        .floating-star:nth-child(4n)::before {
+            content: '✨';
+            animation: sparkleFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes starFloat {
+            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) translateX(10px) rotate(90deg); }
+            50% { transform: translateY(-10px) translateX(-5px) rotate(180deg); }
+            75% { transform: translateY(-30px) translateX(-10px) rotate(270deg); }
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        @keyframes musicNoteFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(15deg); }
+        }
+
+        @keyframes starGlow {
+            0%, 100% { 
+                opacity: 0.7; 
+                transform: scale(1); 
+                filter: brightness(1);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.2); 
+                filter: brightness(1.5);
+            }
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { 
+                opacity: 0.5; 
+                transform: translateY(0px) scale(1); 
+            }
+            25% { 
+                opacity: 0.8; 
+                transform: translateY(-5px) scale(1.1); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: translateY(-10px) scale(1.2); 
+            }
+            75% { 
+                opacity: 0.8; 
+                transform: translateY(-5px) scale(1.1); 
+            }
+        }
+
+        /* Ranking Buttons */
+        .ranking-button-container {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ranking-btn {
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 25px rgba(255, 20, 147, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ranking-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 12px 35px rgba(255, 20, 147, 0.6),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+
+        .ranking-btn:active {
+            transform: scale(0.95);
+        }
+
+        .ranking-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .ranking-btn:hover::before {
+            left: 100%;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 25px rgba(255, 192, 203, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reset-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 12px 35px rgba(255, 192, 203, 0.6),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+
+        .reset-btn:active {
+            transform: scale(0.95);
+        }
+
+        .reset-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .reset-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Navigation */
+        .nav {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 0 10px;
+            background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ffb6c1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.3);
+            box-shadow: 
+                0 6px 20px rgba(255, 182, 193, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(255, 182, 193, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 10px 30px rgba(255, 182, 193, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                inset 0 -1px 0 rgba(255, 182, 193, 0.3);
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1, #ffc0cb);
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn::after {
+            content: '✨';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .nav-btn:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            animation: sparkle 0.6s ease-in-out;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .song-stars-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(5, 1fr);
+                gap: 40px;
+                padding: 20px;
+                min-height: auto;
+            }
+            
+            .song-star:nth-child(1),
+            .song-star:nth-child(2),
+            .song-star:nth-child(3),
+            .song-star:nth-child(4),
+            .song-star:nth-child(5) {
+                grid-column: 1;
+                grid-row: auto;
+                justify-self: center;
+            }
+            
+            .star-core {
+                font-size: 3rem;
+            }
+            
+            .song-star:hover .star-core {
+                font-size: 3.5rem;
+            }
+            
+            .floating-star {
+                display: none;
+            }
+            
+            .ranking-button-container {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                top: auto;
+                transform: none;
+                flex-direction: row;
+                gap: 10px;
+            }
+            
+            .ranking-btn,
+            .reset-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Diary Entry Modal */
+        .diary-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        .diary-modal-overlay.show {
+            display: flex;
+        }
+
+        @keyframes modalFadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .diary-modal-content {
+            background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ffb6c1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 
+                0 20px 60px rgba(255, 20, 147, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(255, 105, 180, 0.4);
+            position: relative;
+            animation: modalSlideIn 0.4s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            0% { 
+                transform: translateY(-50px) scale(0.9); 
+                opacity: 0; 
+            }
+            100% { 
+                transform: translateY(0) scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        .diary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed rgba(255, 105, 180, 0.5);
+        }
+
+        .diary-title {
+            color: #ff1493;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.6);
+            margin: 0;
+        }
+
+        .diary-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #ff1493;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .diary-close:hover {
+            background: rgba(255, 20, 147, 0.2);
+            transform: scale(1.1);
+        }
+
+        .diary-song-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .diary-song-title {
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .diary-date {
+            color: #666;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin: 0;
+        }
+
+        .diary-entry {
+            text-align: center;
+            position: relative;
+        }
+
+        .diary-text {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .diary-emoji {
+            font-size: 2rem;
+            animation: emojiBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes emojiBounce {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
+    <!-- Floating Stars -->
+    <div class="floating-star" style="top: 10%; left: 10%; animation-delay: 0s;"></div>
+    <div class="floating-star" style="top: 20%; left: 80%; animation-delay: 1s;"></div>
+    <div class="floating-star" style="top: 40%; left: 15%; animation-delay: 2s;"></div>
+    <div class="floating-star" style="top: 60%; left: 85%; animation-delay: 3s;"></div>
+    <div class="floating-star" style="top: 80%; left: 20%; animation-delay: 4s;"></div>
+    <div class="floating-star" style="top: 30%; left: 50%; animation-delay: 5s;"></div>
+    <div class="floating-star" style="top: 70%; left: 60%; animation-delay: 6s;"></div>
+    <div class="floating-star" style="top: 15%; left: 60%; animation-delay: 7s;"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>SONG GALAXY 🌌</h1>
+            <p style="color: #ffb6c1; font-size: 1.2rem; text-shadow: 0 0 10px rgba(255, 182, 193, 0.8);">Memories & Moments</p>
+        </div>
+
+        <!-- Song Stars Galaxy -->
+        <div class="song-stars-container">
+            <!-- Star 1 -->
+            <div class="song-star" id="star1" data-song="Speed Demon -Justin Bieber">
+                <div class="star-core">⭐</div>
+                <div class="star-info">
+                    <div class="star-title">Speed Demon</div>
+                    <div class="star-artist">Justin Bieber</div>
+                </div>
+                <div class="star-rank">2</div>
+            </div>
+
+            <!-- Star 2 -->
+            <div class="song-star" id="star2" data-song="Daises -Justin Bieber">
+                <div class="star-core">⭐</div>
+                <div class="star-info">
+                    <div class="star-title">Daises</div>
+                    <div class="star-artist">Justin Bieber</div>
+                </div>
+                <div class="star-rank">1</div>
+            </div>
+
+            <!-- Star 3 -->
+            <div class="song-star" id="star3" data-song="Work -ATEEZ">
+                <div class="star-core">⭐</div>
+                <div class="star-info">
+                    <div class="star-title">Work</div>
+                    <div class="star-artist">ATEEZ</div>
+                </div>
+                <div class="star-rank">5</div>
+            </div>
+
+            <!-- Star 4 -->
+            <div class="song-star" id="star4" data-song="Lemon Drop -ATEEZ">
+                <div class="star-core">⭐</div>
+                <div class="star-info">
+                    <div class="star-title">Lemon Drop</div>
+                    <div class="star-artist">ATEEZ</div>
+                </div>
+                <div class="star-rank">4</div>
+            </div>
+
+            <!-- Star 5 -->
+            <div class="song-star" id="star5" data-song="Better Man -Justin Bieber">
+                <div class="star-core">⭐</div>
+                <div class="star-info">
+                    <div class="star-title">Better Man</div>
+                    <div class="star-artist">Justin Bieber</div>
+                </div>
+                <div class="star-rank">3</div>
+            </div>
+        </div>
+
+        <!-- Ranking Buttons -->
+        <div class="ranking-button-container">
+            <button class="ranking-btn" id="rankingBtn">RANK SONGS 🏆</button>
+            <button class="reset-btn" id="resetBtn">RESET STARS 🔄</button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav">
+            <a href="page3.html" class="nav-btn">BACK TO JOURNAL 📖</a>
+            <a href="page5.html" class="nav-btn">SHARE SOUNDTRACK 💖</a>
+            <a href="index.html" class="nav-btn">HOME ✨</a>
+        </div>
+    </div>
+
+    <!-- Concert Image Modal -->
+    <div class="concert-image-modal" id="concertImageModal">
+        <button class="close-concert-image" onclick="closeConcertImage()">×</button>
+        <img src="concert-image.jpg" alt="Concert Image" class="concert-image" id="concertImage" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="placeholder-concert-image" style="display: none;">
+            <div class="placeholder-content">
+                <div class="placeholder-icon">🎤</div>
+                <div class="placeholder-text">Hope On the Street 2025</div>
+                <div class="placeholder-subtext">Add your concert photo here!</div>
+            </div>
+        </div>
+        <div class="concert-image-overlay">
+            <div class="concert-image-title">Hope On the Street 2025</div>
+            <div class="concert-image-date">Jhope</div>
+        </div>
+    </div>
+
+    <!-- Concert Memory Text -->
+    <div class="concert-memory" id="concertMemory">
+        <p class="concert-memory-text">
+            <span class="glitter-underline" id="glitterText">I was super excited this day!</span><br>
+            My first concert experience!
+        </p>
+    </div>
+
+    <!-- Diary Entry Modal -->
+    <div class="diary-modal-overlay" id="diaryModal">
+        <div class="diary-modal-content">
+            <div class="diary-header">
+                <h3 class="diary-title">💖 My Music Diary 💖</h3>
+                <button class="diary-close" id="diaryClose">&times;</button>
+            </div>
+            <div class="diary-body">
+                <div class="diary-song-info">
+                    <h4 class="diary-song-title">Speed Demon -Justin Bieber</h4>
+                    <p class="diary-date">September 2025</p>
+                </div>
+                <div class="diary-entry">
+                    <p class="diary-text">"Speed Demon reminds me of times I wanted to break free"</p>
+                    <div class="diary-emoji">⚡</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor
+        let mouseX = 0, mouseY = 0;
+        const customCursor = document.querySelector('.custom-cursor');
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            customCursor.style.left = mouseX - 10 + 'px';
+            customCursor.style.top = mouseY - 10 + 'px';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            customCursor.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            customCursor.style.opacity = '1';
+        });
+
+        // Add event listeners for buttons
+        document.getElementById('rankingBtn').addEventListener('click', rankSongs);
+        document.getElementById('resetBtn').addEventListener('click', resetStars);
+
+        // Diary Modal Event Listeners
+        document.getElementById('diaryClose').addEventListener('click', closeDiaryEntry);
+        document.getElementById('diaryModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDiaryEntry();
+            }
+        });
+
+        // Add click effects to song stars
+        document.querySelectorAll('.song-star').forEach(star => {
+            star.addEventListener('click', function() {
+                this.style.transform = 'scale(0.9) rotate(0deg)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+                
+                // Get song information
+                const songTitle = this.querySelector('.star-title').textContent;
+                const songArtist = this.querySelector('.star-artist').textContent;
+                
+                // Show song information
+                showSongInfo(songTitle, songArtist);
+                
+                // Add sparkle effect
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = '✨';
+                sparkle.style.position = 'absolute';
+                sparkle.style.top = '50%';
+                sparkle.style.left = '50%';
+                sparkle.style.transform = 'translate(-50%, -50%)';
+                sparkle.style.fontSize = '3rem';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '1000';
+                sparkle.style.animation = 'sparkle 1.5s ease-out forwards';
+                
+                this.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.parentNode.removeChild(sparkle);
+                    }
+                }, 1500);
+            });
+        });
+
+        // Song Info Function
+        function showSongInfo(title, artist) {
+            if (title === 'Speed Demon') {
+                // Show diary entry for Speed Demon
+                showDiaryEntry('Speed Demon', 'Speed Demon reminds me of times I wanted to break free', '⚡');
+            } else if (title === 'Daises') {
+                // Show diary entry for Daises
+                showDiaryEntry('Daises', 'It reminds me that even after messy seasons, something new can bloom. Everytime I listen, it feels like planting a fresh piece of myself.', '🌸');
+            } else {
+                // Create a simple alert for other songs
+                alert(`🎵 ${title} by ${artist} 🎵\n\nThis star represents your favorite song in the galaxy!`);
+            }
+        }
+
+        // Diary Entry Functions
+        function showDiaryEntry(songTitle, diaryText, emoji) {
+            const modal = document.getElementById('diaryModal');
+            
+            // Update modal content
+            document.querySelector('.diary-song-title').textContent = songTitle + ' -Justin Bieber';
+            document.querySelector('.diary-text').textContent = `"${diaryText}"`;
+            document.querySelector('.diary-emoji').textContent = emoji;
+            
+            modal.classList.add('show');
+        }
+
+        function closeDiaryEntry() {
+            const modal = document.getElementById('diaryModal');
+            modal.classList.remove('show');
+        }
+
+        // Ranking Function
+        let isRanked = false;
+        const rankingOrder = ['Daises', 'Speed Demon', 'Better Man', 'Lemon Drop', 'Work'];
+        
+        function rankSongs() {
+            const container = document.querySelector('.song-stars-container');
+            const stars = Array.from(document.querySelectorAll('.song-star'));
+            
+            // Show ranking numbers and reorder stars
+            stars.forEach(star => {
+                star.classList.add('ranked');
+            });
+            
+            // Reorder stars based on ranking
+            const reorderedStars = [];
+            rankingOrder.forEach(songTitle => {
+                const star = stars.find(s => s.querySelector('.star-title').textContent === songTitle);
+                if (star) {
+                    reorderedStars.push(star);
+                }
+            });
+            
+            // Clear container and add reordered stars
+            container.innerHTML = '';
+            reorderedStars.forEach(star => {
+                container.appendChild(star);
+            });
+            
+            isRanked = true;
+            
+            // Add celebration effect
+            createCelebrationEffect();
+        }
+
+        function resetStars() {
+            const container = document.querySelector('.song-stars-container');
+            const stars = Array.from(document.querySelectorAll('.song-star'));
+            
+            // Remove ranking numbers
+            stars.forEach(star => {
+                star.classList.remove('ranked');
+            });
+            
+            // Reset to original order
+            const originalOrder = ['star1', 'star2', 'star3', 'star4', 'star5'];
+            container.innerHTML = '';
+            originalOrder.forEach(starId => {
+                const star = document.getElementById(starId);
+                if (star) {
+                    container.appendChild(star);
+                }
+            });
+            
+            isRanked = false;
+            
+            // Add reset effect
+            createResetEffect();
+        }
+
+        function createCelebrationEffect() {
+            // Create confetti effect
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.innerHTML = '🎉';
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-50px';
+                confetti.style.fontSize = '2rem';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '1000';
+                confetti.style.animation = 'confettiFall 3s ease-out forwards';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, 3000);
+            }
+        }
+
+        function createResetEffect() {
+            // Create reset sparkle effect
+            for (let i = 0; i < 15; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = '✨';
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = Math.random() * window.innerWidth + 'px';
+                sparkle.style.top = Math.random() * window.innerHeight + 'px';
+                sparkle.style.fontSize = '1.5rem';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '1000';
+                sparkle.style.animation = 'sparkleReset 2s ease-out forwards';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.parentNode.removeChild(sparkle);
+                    }
+                }, 2000);
+            }
+        }
+
+        // Add confetti and sparkle animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confettiFall {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            @keyframes sparkleReset {
+                0% {
+                    transform: scale(0) rotate(0deg);
+                    opacity: 1;
+                }
+                50% {
+                    transform: scale(1.2) rotate(180deg);
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: scale(0) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Concert Image Modal Functions
+        function showConcertImage(concertType) {
+            const modal = document.getElementById('concertImageModal');
+            const memory = document.getElementById('concertMemory');
+            const glitterText = document.getElementById('glitterText');
+            const concertImage = document.getElementById('concertImage');
+            const concertTitle = document.querySelector('.concert-image-title');
+            const concertDate = document.querySelector('.concert-image-date');
+            const placeholderText = document.querySelector('.placeholder-text');
+            
+            // Set image source and text based on concert type
+            if (concertType === 'justice') {
+                concertImage.src = 'concert-image.jpg';
+                if (placeholderText) placeholderText.textContent = 'Justice Tour 2022';
+                if (concertTitle) concertTitle.textContent = 'Justice Tour 2022';
+                if (concertDate) concertDate.textContent = 'Justin Bieber';
+            } else if (concertType === 'hope') {
+                concertImage.src = 'hope-concert-image.jpg';
+                if (placeholderText) placeholderText.textContent = 'Hope On the Street 2025';
+                if (concertTitle) concertTitle.textContent = 'Hope On the Street 2025';
+                if (concertDate) concertDate.textContent = 'Jhope';
+            }
+            
+            if (modal) {
+                modal.classList.add('show');
+            }
+            
+            // Show memory text after a short delay
+            setTimeout(() => {
+                if (memory) {
+                    memory.classList.add('show');
+                }
+                // Trigger glitter underline after another short delay
+                setTimeout(() => {
+                    if (glitterText) {
+                        glitterText.classList.add('show');
+                    }
+                }, 500);
+            }, 300);
+        }
+
+        function closeConcertImage() {
+            const modal = document.getElementById('concertImageModal');
+            const memory = document.getElementById('concertMemory');
+            const glitterText = document.getElementById('glitterText');
+            
+            if (modal) {
+                modal.classList.remove('show');
+            }
+            if (memory) {
+                memory.classList.remove('show');
+            }
+            if (glitterText) {
+                glitterText.classList.remove('show');
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('concertImageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeConcertImage();
+            }
+        });
+    </script>
+</body>
+</html>

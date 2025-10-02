@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Journal Entries</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease-in-out infinite;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes stickerShimmer {
+            0%, 100% {
+                box-shadow: 
+                    0 0 0 1px rgba(255, 20, 147, 0.4),
+                    0 0 0 2px rgba(255, 105, 180, 0.3),
+                    0 0 0 3px rgba(255, 20, 147, 0.2),
+                    0 0 20px rgba(255, 20, 147, 0.3),
+                    0 4px 8px rgba(0, 0, 0, 0.2),
+                    0 8px 16px rgba(0, 0, 0, 0.1),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.6),
+                    inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                box-shadow: 
+                    0 0 0 1px rgba(255, 20, 147, 0.6),
+                    0 0 0 2px rgba(255, 105, 180, 0.5),
+                    0 0 0 3px rgba(255, 20, 147, 0.4),
+                    0 0 30px rgba(255, 20, 147, 0.5),
+                    0 4px 8px rgba(0, 0, 0, 0.2),
+                    0 8px 16px rgba(0, 0, 0, 0.1),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.8),
+                    inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+            }
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1, #ff69b4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            text-shadow: 
+                0 0 20px rgba(255, 105, 180, 0.8),
+                0 0 40px rgba(255, 20, 147, 0.6),
+                0 0 60px rgba(255, 192, 203, 0.4);
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .journal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .journal-entry {
+            background: rgba(199, 21, 133, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 12px;
+            margin-bottom: 0;
+            box-shadow: 
+                0 0 20px rgba(255, 20, 147, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.2),
+                0 8px 16px rgba(0, 0, 0, 0.1),
+                inset 0 1px 2px rgba(255, 255, 255, 0.6),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transform: perspective(1000px) rotateX(1deg);
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 10px;
+            animation: stickerShimmer 3s ease-in-out infinite;
+        }
+
+        .entry-main-content {
+            flex: 1;
+        }
+
+        .entry-sidebar {
+            width: 110px;
+            background: rgba(255, 192, 203, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.2),
+                0 2px 4px rgba(0, 0, 0, 0.15),
+                inset 0 1px 2px rgba(255, 255, 255, 0.6);
+        }
+
+        .sidebar-title {
+            color: #333;
+            font-size: 0.75rem;
+            font-weight: 900;
+            margin-bottom: 6px;
+            text-align: center;
+            text-shadow: 
+                1px 1px 0px #ff69b4,
+                2px 2px 0px #ff1493;
+        }
+
+        .songs-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 8px 0;
+        }
+
+        .songs-list li {
+            color: #444;
+            font-size: 0.7rem;
+            margin-bottom: 2px;
+            padding: 1px 3px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 3px;
+            border-left: 1px solid #ff69b4;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .mood-section {
+            text-align: center;
+        }
+
+        .mood-emoji {
+            font-size: 1.3rem;
+            margin-bottom: 3px;
+            display: block;
+        }
+
+        .mood-text {
+            color: #333;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .journal-entry-btn {
+            background: rgba(255, 192, 203, 0.9);
+            border: none;
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin-top: 12px;
+            color: #333;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .journal-entry-btn:hover {
+            background: rgba(255, 182, 193, 1);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            color: #222;
+        }
+
+        /* Diary Entry Modal */
+        .diary-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .diary-modal-overlay.show {
+            display: flex;
+        }
+
+        .diary-modal-content {
+            background: rgba(199, 21, 133, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 
+                0 0 20px rgba(255, 20, 147, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.2),
+                0 8px 16px rgba(0, 0, 0, 0.1),
+                inset 0 1px 2px rgba(255, 255, 255, 0.6),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transform: perspective(1000px) rotateX(1deg);
+        }
+
+        .diary-modal-header {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #ff69b4;
+            padding-bottom: 10px;
+        }
+
+        .diary-modal-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #333;
+            text-shadow: 
+                1px 1px 0px #ff69b4,
+                2px 2px 0px #ff1493,
+                3px 3px 0px #ffc0cb;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .diary-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .diary-modal-close:hover {
+            background: #ff1493;
+            transform: scale(1.1);
+        }
+
+        .diary-modal-body {
+            color: #444;
+            line-height: 1.5;
+            font-size: 0.8rem;
+        }
+
+        .diary-entry {
+            background: rgba(255, 192, 203, 0.6);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid rgba(255, 105, 180, 0.3);
+        }
+
+        .diary-entry h4 {
+            color: #333;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .diary-entry p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        /* Lyric Fortune Cookie */
+        .fortune-cookie-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10;
+        }
+
+        .fortune-cookie {
+            width: 100px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #ffc0cb);
+            border-radius: 50px 50px 50px 50px / 30px 30px 30px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 25px rgba(212, 175, 55, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            position: relative;
+            animation: cookieGlow 2s ease-in-out infinite;
+            transition: all 0.3s ease;
+            border: 3px solid #ff1493;
+        }
+
+        .fortune-cookie:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 12px 35px rgba(212, 175, 55, 0.6),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+
+        .fortune-cookie::before {
+            content: "🎵";
+            font-size: 2.5rem;
+            animation: cookieWiggle 2s ease-in-out infinite;
+        }
+
+        .fortune-cookie::after {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: conic-gradient(from 0deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1, #ff69b4, #ff1493);
+            border-radius: 50px 50px 50px 50px / 30px 30px 30px 30px;
+            z-index: -1;
+            animation: cookiePulse 2s ease-in-out infinite;
+        }
+
+        .lyric-dropdown {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1, #ff69b4);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 
+                0 15px 30px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.6);
+            max-width: 300px;
+            width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.8);
+            transition: all 0.4s ease;
+            border: 2px solid #ff1493;
+        }
+
+        .lyric-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .lyric-title {
+            font-size: 1rem;
+            font-weight: 900;
+            color: #333;
+            margin-bottom: 10px;
+            text-shadow: 
+                1px 1px 0px #ff69b4,
+                2px 2px 0px #ff1493;
+        }
+
+        .glittery-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1, #ff69b4, #ff1493, #ffc0cb, #ffb6c1, #ff69b4, #ff1493);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glitterShine 2s ease-in-out infinite, gradientShift 3s ease-in-out infinite;
+            text-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.8),
+                0 0 20px rgba(255, 105, 180, 0.6),
+                0 0 30px rgba(255, 20, 147, 0.4);
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.8s ease-out;
+        }
+
+        .glittery-text.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @keyframes glitterShine {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px rgba(255, 20, 147, 0.8),
+                    0 0 20px rgba(255, 105, 180, 0.6),
+                    0 0 30px rgba(255, 20, 147, 0.4);
+            }
+            50% {
+                text-shadow: 
+                    0 0 20px rgba(255, 20, 147, 1),
+                    0 0 30px rgba(255, 105, 180, 0.8),
+                    0 0 40px rgba(255, 20, 147, 0.6),
+                    0 0 50px rgba(255, 192, 203, 0.4);
+            }
+        }
+
+        .lyric-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ff1493;
+            text-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.8),
+                0 0 20px rgba(255, 105, 180, 0.6),
+                0 0 30px rgba(255, 20, 147, 0.4);
+            line-height: 1.4;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .lyric-close {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #ff1493;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .lyric-close:hover {
+            transform: scale(1.2);
+            color: #ff69b4;
+        }
+
+        @keyframes cookieGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 8px 25px rgba(212, 175, 55, 0.4),
+                    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 12px 35px rgba(212, 175, 55, 0.6),
+                    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                    0 0 20px rgba(255, 20, 147, 0.3);
+            }
+        }
+
+        @keyframes cookieWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-2deg); }
+            75% { transform: rotate(2deg); }
+        }
+
+        @keyframes cookiePulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        @keyframes glitterShine {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px rgba(255, 20, 147, 0.8),
+                    0 0 20px rgba(255, 105, 180, 0.6),
+                    0 0 30px rgba(255, 20, 147, 0.4);
+            }
+            50% {
+                text-shadow: 
+                    0 0 20px rgba(255, 20, 147, 1),
+                    0 0 30px rgba(255, 105, 180, 0.8),
+                    0 0 40px rgba(255, 20, 147, 0.6),
+                    0 0 50px rgba(255, 192, 203, 0.4);
+            }
+        }
+            }
+        }
+
+        /* Sticky Notes */
+        .sticky-notes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .sticky-note {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ffff88, #ffffaa, #ffffcc);
+            border: 2px solid #ff1493;
+            border-radius: 0 0 0 20px;
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 20, 147, 0.3);
+            cursor: pointer;
+            pointer-events: all;
+            transition: all 0.3s ease;
+            transform: rotate(var(--rotation, 0deg));
+            font-family: 'Comic Sans MS', cursive;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .sticky-note:hover {
+            transform: rotate(var(--rotation, 0deg)) scale(1.1);
+            box-shadow: 
+                0 6px 12px rgba(0, 0, 0, 0.3),
+                0 0 0 2px rgba(255, 20, 147, 0.5);
+            z-index: 10;
+        }
+
+        .sticky-note-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .sticky-note-artist {
+            font-size: 0.7rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #ffb6c1;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 6px solid;
+            border-image: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1) 1;
+            box-shadow: 
+                0 0 0 3px rgba(255, 105, 180, 0.3),
+                0 0 0 6px rgba(255, 20, 147, 0.2),
+                0 0 0 9px rgba(255, 192, 203, 0.1),
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 3px rgba(255, 255, 255, 0.8);
+            position: relative;
+            transform: perspective(1000px) rotateX(2deg);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #ff69b4;
+            padding-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #333;
+            text-shadow: 
+                2px 2px 0px #ff69b4,
+                4px 4px 0px #ff1493,
+                6px 6px 0px #ffc0cb;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #ff1493;
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            color: #444;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .song-info {
+            background: #ffc0cb;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #ff69b4;
+        }
+
+        .song-info h3 {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .song-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .journal-entry:hover {
+            transform: perspective(1000px) rotateX(0deg) translateY(-10px);
+            box-shadow: 
+                0 0 0 4px rgba(255, 105, 180, 0.5),
+                0 0 0 8px rgba(255, 20, 147, 0.3),
+                0 0 0 12px rgba(255, 192, 203, 0.2),
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.9),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .journal-entry::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1, #ff69b4);
+            background-size: 400% 400%;
+            animation: gradientShift 4s ease-in-out infinite;
+            border-radius: 29px;
+            z-index: -1;
+        }
+        .entry-date {
+            color: #c71585;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .entry-title {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-weight: 900;
+            text-shadow: 
+                1px 1px 0px #ff69b4,
+                2px 2px 0px #ff1493,
+                3px 3px 0px #ffc0cb;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            position: relative;
+        }
+        .entry-content {
+            color: #444;
+            line-height: 1.4;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+        .nav {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .nav-btn {
+            display: inline-block;
+            padding: 18px 35px;
+            margin: 0 15px;
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.9) 0%,
+                rgba(240, 240, 240, 0.8) 25%,
+                rgba(220, 220, 220, 0.7) 50%,
+                rgba(200, 200, 200, 0.6) 75%,
+                rgba(180, 180, 180, 0.5) 100%);
+            color: #333;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 
+                0 15px 30px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.8),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 
+                1px 1px 0px #ff69b4,
+                2px 2px 0px #ff1493,
+                3px 3px 0px #ffc0cb;
+            transition: all 0.3s ease;
+            position: relative;
+            transform: perspective(1000px) rotateX(5deg);
+        }
+
+        .nav-btn:hover {
+            transform: perspective(1000px) rotateX(0deg) translateY(-5px);
+            box-shadow: 
+                0 0 0 3px rgba(255, 105, 180, 0.6),
+                0 0 0 6px rgba(255, 20, 147, 0.4),
+                0 0 0 9px rgba(255, 192, 203, 0.3),
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.9),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ffb6c1, #ff69b4);
+            background-size: 400% 400%;
+            animation: gradientShift 4s ease-in-out infinite;
+            border-radius: 28px;
+            z-index: -1;
+        }
+
+        /* Ticket Styles */
+        .ticket-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .ticket {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 3px solid #ff69b4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ticket:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .ticket::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 105, 180, 0.1) 50%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .ticket-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #ff69b4;
+            padding-bottom: 15px;
+        }
+
+        .ticket-header h3 {
+            color: #ff69b4;
+            font-size: 1.8rem;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(255, 105, 180, 0.3);
+        }
+
+        .ticket-header p {
+            color: #666;
+            font-size: 1rem;
+            margin: 5px 0 0 0;
+        }
+
+        .ticket-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .ticket-info {
+            color: #333;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .ticket-info .label {
+            font-weight: bold;
+            color: #ff69b4;
+        }
+
+        .ticket-qr {
+            width: 80px;
+            height: 80px;
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .ticket-footer {
+            text-align: center;
+            color: #ff69b4;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Image Upload Area */
+        .image-upload-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 105, 180, 0.95);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .upload-content {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .upload-content h4 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .upload-btn, .save-btn, .cancel-btn {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            color: #ff69b4;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .upload-btn:hover, .save-btn:hover, .cancel-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .image-preview {
+            margin: 20px 0;
+            max-width: 300px;
+            max-height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .journal-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto auto auto;
+            }
+            
+            .journal-grid .journal-entry:nth-child(3) {
+                grid-column: 1 / 3;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .journal-entry {
+                flex-direction: column;
+            }
+            
+            .entry-sidebar {
+                width: 100%;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .journal-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                gap: 15px;
+                padding: 0 10px;
+            }
+            
+            .journal-entry {
+                padding: 15px;
+                margin-bottom: 0;
+                flex-direction: column;
+            }
+            
+            .entry-sidebar {
+                width: 100%;
+                margin-top: 12px;
+                padding: 12px;
+            }
+            
+            .songs-list li {
+                font-size: 0.7rem;
+                padding: 3px 5px;
+            }
+        }
+
+        /* Holographic Stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: linear-gradient(45deg, 
+                #ff00ff, #00ffff, #ffff00, #ff0080, #8000ff, #00ff80, #ff8000, #0080ff);
+            background-size: 400% 400%;
+            animation: starTwinkle 4s ease-in-out infinite, starFloat 8s linear infinite;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 15px rgba(255, 0, 255, 0.6),
+                0 0 30px rgba(0, 255, 255, 0.4),
+                0 0 45px rgba(255, 255, 0, 0.3);
+            filter: saturate(1.5) brightness(1.1);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .star.moved-aside {
+            transform: translateX(200px) translateY(-100px) scale(0.3);
+            opacity: 0.2;
+            animation-play-state: paused;
+        }
+
+        .star.moved-aside:nth-child(even) {
+            transform: translateX(-200px) translateY(100px) scale(0.3);
+        }
+
+        .star::before {
+            content: '⭐';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: inherit;
+            color: white;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 1),
+                0 0 20px rgba(255, 0, 255, 0.8),
+                0 0 30px rgba(0, 255, 255, 0.6);
+            animation: starSpin 3s linear infinite;
+        }
+
+
+        .star-1 { width: 35px; height: 35px; top: 10%; left: 10%; animation-delay: 0s; }
+        .star-2 { width: 28px; height: 28px; top: 20%; left: 80%; animation-delay: 0.5s; }
+        .star-3 { width: 42px; height: 42px; top: 30%; left: 30%; animation-delay: 1s; }
+        .star-4 { width: 32px; height: 32px; top: 40%; left: 70%; animation-delay: 1.5s; }
+        .star-5 { width: 38px; height: 38px; top: 50%; left: 15%; animation-delay: 2s; }
+        .star-6 { width: 30px; height: 30px; top: 60%; left: 85%; animation-delay: 2.5s; }
+        .star-7 { width: 40px; height: 40px; top: 70%; left: 40%; animation-delay: 3s; }
+        .star-8 { width: 34px; height: 34px; top: 80%; left: 60%; animation-delay: 3.5s; }
+        .star-9 { width: 36px; height: 36px; top: 90%; left: 25%; animation-delay: 4s; }
+        .star-10 { width: 30px; height: 30px; top: 15%; left: 50%; animation-delay: 4.5s; }
+        .star-11 { width: 40px; height: 40px; top: 35%; left: 90%; animation-delay: 5s; }
+        .star-12 { width: 26px; height: 26px; top: 55%; left: 5%; animation-delay: 5.5s; }
+        .star-13 { width: 44px; height: 44px; top: 75%; left: 75%; animation-delay: 6s; }
+        .star-14 { width: 35px; height: 35px; top: 25%; left: 45%; animation-delay: 6.5s; }
+        .star-15 { width: 32px; height: 32px; top: 65%; left: 35%; animation-delay: 7s; }
+        .star-16 { width: 24px; height: 24px; top: 5%; left: 20%; animation-delay: 7.5s; }
+        .star-17 { width: 46px; height: 46px; top: 12%; left: 60%; animation-delay: 8s; }
+        .star-18 { width: 30px; height: 30px; top: 18%; left: 35%; animation-delay: 8.5s; }
+        .star-19 { width: 38px; height: 38px; top: 25%; left: 5%; animation-delay: 9s; }
+        .star-20 { width: 26px; height: 26px; top: 32%; left: 55%; animation-delay: 9.5s; }
+
+        @keyframes starTwinkle {
+            0%, 100% { 
+                opacity: 0.6; 
+                transform: scale(1);
+                background-position: 0% 50%;
+            }
+            50% { 
+                opacity: 0.9; 
+                transform: scale(1.1);
+                background-position: 50% 0%;
+            }
+        }
+
+        @keyframes starFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+
+        @keyframes starSpin {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.05); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Holographic Stars -->
+    <div class="stars">
+        <div class="star star-1"></div>
+        <div class="star star-2"></div>
+        <div class="star star-3"></div>
+        <div class="star star-4"></div>
+        <div class="star star-5"></div>
+        <div class="star star-6"></div>
+        <div class="star star-7"></div>
+        <div class="star star-8"></div>
+        <div class="star star-9"></div>
+        <div class="star star-10"></div>
+        <div class="star star-11"></div>
+        <div class="star star-12"></div>
+        <div class="star star-13"></div>
+        <div class="star star-14"></div>
+        <div class="star star-15"></div>
+        <div class="star star-16"></div>
+        <div class="star star-17"></div>
+        <div class="star star-18"></div>
+        <div class="star star-19"></div>
+        <div class="star star-20"></div>
+    </div>
+
+
+    <div class="header">
+        <h1>DIGITAL JOURNAL ENTRIES</h1>
+    </div>
+
+    <div class="journal-grid">
+        <!-- Top Row - 2 boxes -->
+    <div class="journal-entry">
+            <div class="entry-main-content">
+                <div class="entry-date">Monday September 22, 2025</div>
+        <div class="entry-title">🎵 Recents</div>
+        <div class="entry-content">
+            <strong>Recent Albums:</strong><br>
+            • SWAG - Justin Bieber<br>
+            • SWAG ll - Justin Bieber<br>
+            • KPOP<br><br>
+                    <strong>Total Songs:</strong> 38 songs! 🎵
+                </div>
+            </div>
+            <div class="entry-sidebar">
+                <div class="sidebar-title">🎵</div>
+                <ul class="songs-list">
+                    <li>10 songs played</li>
+                    <li>22 songs played</li>
+                    <li>6 songs played</li>
+                </ul>
+                <div class="mood-section">
+                    <span class="mood-emoji">😊</span>
+                    <div class="mood-text">Happy & Energetic</div>
+                </div>
+                <button class="journal-entry-btn" data-entry="1">Journal Entry</button>
+            </div>
+        </div>
+
+        <div class="journal-entry">
+            <div class="entry-main-content">
+                <div class="entry-date">Tuesday September 23, 2025</div>
+                <div class="entry-title">🎧 Recents</div>
+                <div class="entry-content">
+                    <strong>Recent Albums:</strong><br>
+                    • SWAG - Justin Bieber<br>
+                    • SWAG ll - Justin Bieber<br>
+                    • KPOP<br><br>
+                    <strong>Total Songs:</strong> 27 songs! 🎵
+                </div>
+            </div>
+            <div class="entry-sidebar">
+                <div class="sidebar-title">🎵</div>
+                <ul class="songs-list">
+                    <li>11 songs played</li>
+                    <li>12 songs played</li>
+                    <li>4 songs played</li>
+                </ul>
+                <div class="mood-section">
+                    <span class="mood-emoji">🔍</span>
+                    <div class="mood-text">Curious & Adventurous</div>
+                </div>
+                <button class="journal-entry-btn" data-entry="2">Journal Entry</button>
+        </div>
+    </div>
+
+    <div class="journal-entry">
+            <div class="entry-main-content">
+                <div class="entry-date">Wednesday September 26, 2025</div>
+        <div class="entry-title">🎵 Recents</div>
+        <div class="entry-content">
+            <strong>Recent Albums:</strong><br>
+            • SWAG - Justin Bieber<br>
+            • SWAG ll - Justin Bieber<br>
+            • KPOP<br><br>
+            <strong>Total Songs:</strong> 27 songs! 🎵
+        </div>
+    </div>
+            <div class="entry-sidebar">
+                <div class="sidebar-title">🎵</div>
+                <ul class="songs-list">
+                    <li>18 songs played</li>
+                    <li>8 songs played</li>
+                    <li>1 song played</li>
+                </ul>
+                <div class="mood-section">
+                    <span class="mood-emoji">🎉</span>
+                    <div class="mood-text">Excited & Pumped</div>
+                </div>
+                <button class="journal-entry-btn" data-entry="3">Journal Entry</button>
+            </div>
+        </div>
+
+        <!-- Bottom Row - 2 boxes -->
+        <div class="journal-entry">
+            <div class="entry-main-content">
+                <div class="entry-date">Thursday September 27, 2025</div>
+                <div class="entry-title">🎤 Recents</div>
+                <div class="entry-content">
+                    <strong>Recent Albums:</strong><br>
+                    • SWAG ll - Justin Bieber<br><br>
+                    <strong>Total Songs:</strong> 2 songs! 🎵
+                </div>
+            </div>
+            <div class="entry-sidebar">
+                <div class="sidebar-title">🎵</div>
+                <ul class="songs-list">
+                    <li>2 songs played</li>
+                </ul>
+                <div class="mood-section">
+                    <span class="mood-emoji">✨</span>
+                    <div class="mood-text">Nostalgic & Reflective</div>
+                </div>
+                <button class="journal-entry-btn" data-entry="4">Journal Entry</button>
+            </div>
+        </div>
+
+        <div class="journal-entry">
+            <div class="entry-main-content">
+                <div class="entry-date">Friday September 28, 2025</div>
+                <div class="entry-title">📱 Recents</div>
+                <div class="entry-content">
+                    <strong>Recent Albums:</strong><br>
+                    • SWAG - Justin Bieber<br>
+                    • SWAG ll - Justin Bieber<br>
+                    • KPOP<br><br>
+                    <strong>Total Songs:</strong> 33 songs! 🎵
+                </div>
+            </div>
+            <div class="entry-sidebar">
+                <div class="sidebar-title">🎵</div>
+                <ul class="songs-list">
+                    <li>13 songs played</li>
+                    <li>20 songs played</li>
+                </ul>
+                <div class="mood-section">
+                    <span class="mood-emoji">🎯</span>
+                    <div class="mood-text">Focused & Determined</div>
+                </div>
+                <button class="journal-entry-btn" data-entry="5">Journal Entry</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="page2.html" class="nav-btn">Top 10 tracks</a>
+        <a href="index.html" class="nav-btn">HOME ✨</a>
+        <a href="page4.html" class="nav-btn">SONG GALAXY 🌌</a>
+    </div>
+
+    <!-- Song Modal -->
+    <div class="modal-overlay" id="songModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Song Details</div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Diary Entry Modal -->
+    <div class="diary-modal-overlay" id="diaryModal">
+        <div class="diary-modal-content">
+            <button class="diary-modal-close" onclick="closeDiaryModal()">&times;</button>
+            <div class="diary-modal-header">
+                <div class="diary-modal-title" id="diaryModalTitle">My Song Journal</div>
+            </div>
+            <div class="diary-modal-body" id="diaryModalBody">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Lyric Fortune Cookie -->
+    <div class="fortune-cookie-container">
+        <div class="fortune-cookie" id="fortuneCookie"></div>
+        <div class="lyric-dropdown" id="lyricDropdown">
+            <button class="lyric-close" onclick="closeLyricDropdown()">×</button>
+            <div class="lyric-title">🎵 Music Quote 🎵</div>
+            <div class="lyric-text" id="lyricText">Your music quote will appear here...</div>
+        </div>
+    </div>
+
+    <script>
+        // Song data
+        const songData = {
+            'speed-demon': {
+                title: 'Speed Demon -Justin Bieber',
+                artist: 'Justin Bieber',
+                album: 'SWAG (2025)',
+                duration: '3:45',
+                genre: 'Pop',
+                mood: 'Energetic & Fast-paced',
+                description: 'A high-energy track that gets your heart racing. Perfect for workouts or when you need a boost of motivation!',
+                lyrics: 'Running fast, can\'t slow down, speed demon in this town...',
+                playCount: 127,
+                addedDate: 'September 15, 2024'
+            },
+            'daises': {
+                title: 'Daises -Justin Bieber',
+                artist: 'Justin Bieber',
+                album: 'SWAG (2025)',
+                duration: '3:12',
+                genre: 'Pop',
+                mood: 'Happy & Uplifting',
+                description: 'A beautiful, uplifting song that brings joy and positivity. The perfect pick-me-up for any day!',
+                lyrics: 'Daises in the garden, blooming in the sun...',
+                playCount: 203,
+                addedDate: 'September 10, 2024'
+            },
+            'better-man': {
+                title: 'Better Man -Justin Bieber',
+                artist: 'Justin Bieber',
+                album: 'SWAG (2025)',
+                duration: '4:02',
+                genre: 'Pop',
+                mood: 'Reflective & Hopeful',
+                description: 'A heartfelt song about growth and becoming a better person. Deep lyrics with emotional depth.',
+                lyrics: 'I\'m trying to be a better man, learning from my mistakes...',
+                playCount: 89,
+                addedDate: 'September 20, 2024'
+            },
+            'work': {
+                title: 'Work -ATEEZ',
+                artist: 'ATEEZ',
+                album: 'THE WORLD EP.1: MOVEMENT',
+                duration: '3:28',
+                genre: 'K-Pop',
+                mood: 'Intense & Powerful',
+                description: 'An explosive K-pop track with powerful vocals and dynamic choreography. Gets you pumped up!',
+                lyrics: 'Work work work, we never stop, grinding to the top...',
+                playCount: 156,
+                addedDate: 'October 1, 2024'
+            },
+            'lemon-drop': {
+                title: 'Lemon Drop -ATEEZ',
+                artist: 'ATEEZ',
+                album: 'THE WORLD EP.1: MOVEMENT',
+                duration: '3:15',
+                genre: 'K-Pop',
+                mood: 'Sweet & Catchy',
+                description: 'A sweet and catchy track with infectious melodies. Perfect for when you need something uplifting!',
+                lyrics: 'Sweet like lemon drop, dancing to the beat...',
+                playCount: 134,
+                addedDate: 'October 5, 2024'
+            },
+            'poppin-my-shit': {
+                title: 'Poppin My S*** -Justin Bieber',
+                artist: 'Justin Bieber',
+                album: 'SWAG (2025)',
+                duration: '3:38',
+                genre: 'Pop',
+                mood: 'Confident & Bold',
+                description: 'A confident anthem about being proud of your achievements. Perfect confidence booster!',
+                lyrics: 'I\'m poppin\' my shit, feeling so good...',
+                playCount: 98,
+                addedDate: 'September 25, 2024'
+            }
+        };
+
+        // Star movement functionality
+        let starsMoved = false;
+        
+        // Add click event listeners to all journal entries
+        document.querySelectorAll('.journal-entry').forEach(entry => {
+            entry.addEventListener('click', function() {
+                if (!starsMoved) {
+                    moveStarsAside();
+                    starsMoved = true;
+                    
+                    // Reset stars after 3 seconds
+                    setTimeout(() => {
+                        resetStars();
+                        starsMoved = false;
+                    }, 3000);
+                }
+            });
+        });
+        
+        // Add click event listeners to sticky notes
+        document.querySelectorAll('.sticky-note').forEach(note => {
+            note.addEventListener('click', function() {
+                const songId = this.getAttribute('data-song');
+                openModal(songId);
+            });
+        });
+        
+        function moveStarsAside() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.classList.add('moved-aside');
+            });
+        }
+        
+        function resetStars() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.classList.remove('moved-aside');
+            });
+        }
+        
+        function openModal(songId) {
+            const song = songData[songId];
+            if (!song) return;
+            
+            const modal = document.getElementById('songModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            title.textContent = song.title;
+            body.innerHTML = `
+                <div class="song-info">
+                    <h3>🎵 Song Information</h3>
+                    <p><strong>Artist:</strong> ${song.artist}</p>
+                    <p><strong>Album:</strong> ${song.album}</p>
+                    <p><strong>Duration:</strong> ${song.duration}</p>
+                    <p><strong>Genre:</strong> ${song.genre}</p>
+                    <p><strong>Mood:</strong> ${song.mood}</p>
+                </div>
+                
+                <div class="song-info">
+                    <h3>📝 Description</h3>
+                    <p>${song.description}</p>
+                </div>
+                
+                <div class="song-info">
+                    <h3>🎤 Lyrics Preview</h3>
+                    <p><em>"${song.lyrics}"</em></p>
+                </div>
+                
+                <div class="song-info">
+                    <h3>📊 Statistics</h3>
+                    <p><strong>Play Count:</strong> ${song.playCount} times</p>
+                    <p><strong>Added Date:</strong> ${song.addedDate}</p>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('songModal');
+            modal.classList.remove('show');
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('songModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Diary entry data
+        const diaryEntries = {
+            1: {
+                title: "Daises -Justin Bieber",
+                date: "Monday September 22, 2025",
+                content: "Daises really hit me today since it is Monday, the start of the week. Really helped me go on about my day :) 🌸"
+            },
+            2: {
+                title: "Speed Demon -Justin Bieber",
+                date: "Tuesday September 23, 2025",
+                content: "I really love rhythm of this song and I can't get it out of my head. I have this song on repeat. I am feeling curious and adventurous today :) ⚡"
+            },
+            3: {
+                title: "Speed Demon -Justin Bieber",
+                date: "Wednesday September 26, 2025",
+                content: "This fast-paced track perfectly matches my energy today. I love how it makes me feel unstoppable and ready to take on any challenge. The rhythm is so catchy that I find myself humming it all day long! ⚡"
+            },
+            4: {
+                title: "I Think You're Special -Justin Bieber",
+                date: "Thursday September 27, 2025",
+                content: "There's something so nostalgic about this song. It reminds me of simpler times and brings back so many good memories. The emotional depth in the lyrics really speaks to my heart. It's like a warm hug in musical form! 💕"
+            },
+            5: {
+                title: "Lemon Drop -ATEEZ",
+                date: "Friday September 28, 2025",
+                content: "This sweet and catchy track has been my happy place this week. The infectious melody and positive vibes just make everything feel better. It's the perfect song to end the week on a high note! 🍋✨"
+            }
+        };
+
+        // Add click event listeners to journal entry buttons
+        document.querySelectorAll('.journal-entry-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const entryId = this.getAttribute('data-entry');
+                openDiaryModal(entryId);
+            });
+        });
+
+        function openDiaryModal(entryId) {
+            const entry = diaryEntries[entryId];
+            if (!entry) return;
+            
+            const modal = document.getElementById('diaryModal');
+            const title = document.getElementById('diaryModalTitle');
+            const body = document.getElementById('diaryModalBody');
+            
+            title.textContent = entry.title;
+            body.innerHTML = `
+                <div class="diary-entry">
+                    <h4>📅 ${entry.date}</h4>
+                    <p>${entry.content}</p>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        }
+        
+        function closeDiaryModal() {
+            const modal = document.getElementById('diaryModal');
+            modal.classList.remove('show');
+        }
+        
+        // Close diary modal when clicking outside
+        document.getElementById('diaryModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDiaryModal();
+            }
+        });
+
+        // Music quote data
+        const musicQuotes = [
+            "Music is the universal language of mankind. - Henry Wadsworth Longfellow",
+            "Where words fail, music speaks. - Hans Christian Andersen",
+            "Music is the soundtrack of your life. - Dick Clark",
+            "One good thing about music, when it hits you, you feel no pain. - Bob Marley",
+            "Music is the divine way to tell beautiful, poetic things to the heart. - Pablo Casals",
+            "Without music, life would be a mistake. - Friedrich Nietzsche",
+            "Music is the art which is most nigh to tears and memory. - Oscar Wilde",
+            "Music is the poetry of the air. - Jean Paul Richter",
+            "Music washes away from the soul the dust of everyday life. - Berthold Auerbach",
+            "Music is the language of the spirit. It opens the secret of life. - Kahlil Gibran",
+            "Music is the strongest form of magic. - Marilyn Manson",
+            "Music is the medicine of the mind. - John A. Logan",
+            "Music is the art of thinking with sounds. - Jules Combarieu",
+            "Music is the wine that fills the cup of silence. - Robert Fripp",
+            "Music is the moonlight in the gloomy night of life. - Jean Paul Richter"
+        ];
+
+        // Add click event listener to fortune cookie
+        document.getElementById('fortuneCookie').addEventListener('click', function() {
+            showMusicQuote();
+        });
+
+        function showMusicQuote() {
+            const randomQuote = musicQuotes[Math.floor(Math.random() * musicQuotes.length)];
+            const dropdown = document.getElementById('lyricDropdown');
+            const lyricText = document.getElementById('lyricText');
+            
+            // Show dropdown with quote
+            lyricText.textContent = randomQuote;
+            dropdown.classList.add('show');
+        }
+
+        function closeLyricDropdown() {
+            const dropdown = document.getElementById('lyricDropdown');
+            dropdown.classList.remove('show');
+        }
+
+        // Close lyric dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const cookie = document.getElementById('fortuneCookie');
+            const dropdown = document.getElementById('lyricDropdown');
+            
+            if (!cookie.contains(e.target) && !dropdown.contains(e.target)) {
+                closeLyricDropdown();
+            }
+        });
+    </script>
+
+</body>
+</html>
+</body>
+</html>
